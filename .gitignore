@@ -1,0 +1,51 @@
+# Python相关
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 虚拟环境
+venv/
+env/
+ENV/
+.env
+
+# 缓存文件
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# 输出文件
+output/
+examples/output/
+*.md
+!README.md
+
+# 编辑器相关
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# 项目特定
+/output.md 
