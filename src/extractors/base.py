@@ -13,7 +13,7 @@ class BaseExtractor(ABC):
     def __init__(self, api_key: Optional[str] = None, **kwargs):
         """
         初始化提取器
-        
+
         Args:
             api_key: API密钥
             **kwargs: 其他配置参数
@@ -25,10 +25,10 @@ class BaseExtractor(ABC):
     def extract(self, url: str) -> Dict[str, Union[str, dict]]:
         """
         从URL中提取内容
-        
+
         Args:
             url: 网页URL
-            
+
         Returns:
             包含以下字段的字典:
             - markdown: 提取的markdown文本
@@ -36,15 +36,15 @@ class BaseExtractor(ABC):
             - metadata: 元数据 (可选)
         """
         pass
-    
+
     @abstractmethod
     async def extract_async(self, url: str) -> Dict[str, Union[str, dict]]:
         """
         从URL中异步提取内容
-        
+
         Args:
             url: 网页URL
-            
+
         Returns:
             包含以下字段的字典:
             - markdown: 提取的markdown文本
@@ -57,11 +57,11 @@ class BaseExtractor(ABC):
     def extract_batch(self, urls: List[str]) -> List[Dict[str, Union[str, dict]]]:
         """
         批量从URL中提取内容
-        
+
         Args:
             urls: 网页URL列表
-            
+
         Returns:
             提取结果列表
         """
-        pass 
+        pass

@@ -32,6 +32,8 @@ ENV/
 htmlcov/
 .tox/
 .nox/
+.mypy_cache/
+.ruff_cache/
 
 # 输出文件
 output/
@@ -48,4 +50,4 @@ examples/output/
 .DS_Store
 
 # 项目特定
-/output.md 
+/output.md

@@ -24,7 +24,7 @@ class JinaExtractor(BaseExtractor):
     def __init__(self, api_key: Optional[str] = None, **kwargs):
         """
         初始化Jina提取器
-        
+
         Args:
             api_key: Jina API密钥
             **kwargs: 其他配置参数
@@ -36,10 +36,10 @@ class JinaExtractor(BaseExtractor):
     def extract(self, url: str) -> Dict[str, Union[str, dict]]:
         """
         使用Jina.ai从URL提取内容
-        
+
         Args:
             url: 网页URL
-            
+
         Returns:
             包含markdown和元数据的字典
         """
@@ -49,18 +49,15 @@ class JinaExtractor(BaseExtractor):
                     self.BASE_URL,
                     headers={
                         "Content-Type": "application/json",
-                        "Authorization": f"Bearer {self.api_key}"
+                        "Authorization": f"Bearer {self.api_key}",
                     },
-                    json={
-                        "url": url,
-                        "format": "markdown"
-                    },
-                    timeout=self.timeout
+                    json={"url": url, "format": "markdown"},
+                    timeout=self.timeout,
                 )
-                
+
                 response.raise_for_status()
                 data = response.json()
-                
+
                 # 注意：这里的返回结构需要根据实际Jina.ai API调整
                 return {
                     "markdown": data.get("content", ""),
@@ -68,38 +65,40 @@ class JinaExtractor(BaseExtractor):
                     "metadata": {
                         "title": data.get("title", ""),
                         "url": url,
-                        "extractor": "jina"
-                    }
+                        "extractor": "jina",
+                    },
                 }
-                    
+
             except RequestException as e:
-                logger.error(f"Jina API请求异常 (尝试 {attempt+1}/{self.retry_count}): {str(e)}")
-                
+                logger.error(
+                    f"Jina API请求异常 (尝试 {attempt+1}/{self.retry_count}): {str(e)}"
+                )
+
                 # 最后一次尝试失败时返回空结果
                 if attempt == self.retry_count - 1:
                     return {
                         "markdown": "",
                         "html": "",
-                        "metadata": {"error": str(e), "url": url}
+                        "metadata": {"error": str(e), "url": url},
                     }
-                    
+
                 # 短暂延迟后重试
                 time.sleep(1)
-        
+
         # 不应该到达这里，但为安全起见
         return {
             "markdown": "",
             "html": "",
-            "metadata": {"error": "所有请求尝试均失败", "url": url}
+            "metadata": {"error": "所有请求尝试均失败", "url": url},
         }
 
     async def extract_async(self, url: str) -> Dict[str, Union[str, dict]]:
         """
         异步从URL提取内容
-        
+
         Args:
             url: 网页URL
-            
+
         Returns:
             包含markdown和元数据的字典
         """
@@ -110,10 +109,10 @@ class JinaExtractor(BaseExtractor):
     def extract_batch(self, urls: List[str]) -> List[Dict[str, Union[str, dict]]]:
         """
         批量从URL提取内容
-        
+
         Args:
             urls: URL列表
-            
+
         Returns:
             提取结果列表
         """
@@ -121,4 +120,4 @@ class JinaExtractor(BaseExtractor):
         results = []
         for url in urls:
             results.append(self.extract(url))
-        return results 
+        return results

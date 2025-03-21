@@ -1,0 +1,46 @@
+graph TD
+    subgraph 用户接口
+        CLI[命令行接口]
+        API[API接口]
+    end
+
+    subgraph 提取模块
+        EM[提取器管理器]
+        FE[Firecrawl提取器]
+        JE[Jina.ai提取器]
+    end
+
+    subgraph 处理模块
+        LLM[LLM处理器]
+        OP[优化处理]
+    end
+
+    subgraph 输出模块
+        MD[Markdown输出]
+        HTML[HTML输出]
+        META[元数据输出]
+    end
+
+    CLI -->|单个URL| EM
+    CLI -->|批量URL| EM
+    API -->|请求| EM
+    
+    EM -->|选择| FE
+    EM -->|选择| JE
+    
+    FE -->|原始内容| LLM
+    JE -->|原始内容| LLM
+    
+    LLM -->|处理| OP
+    
+    OP -->|优化结果| MD
+    OP -->|保存| HTML
+    OP -->|保存| META
+    
+    classDef primary fill:#f9f,stroke:#333,stroke-width:2px
+    classDef secondary fill:#bbf,stroke:#333,stroke-width:1px
+    classDef module fill:#dfd,stroke:#333,stroke-width:1px
+    
+    class CLI,API primary
+    class FE,JE,LLM,OP secondary
+    class EM,MD,HTML,META module 

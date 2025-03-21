@@ -1,0 +1,21 @@
+[flake8]
+max-line-length = 88
+select = C,E,F,W,B,B950
+ignore = E203, E231, E501, W503, B950
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    *.egg-info,
+    venv,
+    env,
+    docs
+
+per-file-ignores =
+    # 测试文件可以包含更多的复杂性和较长的函数
+    tests/*:E501,F811,F401,S101,D
+    # 允许examples中的简化示例
+    examples/*:D,F401
+    # 允许__init__.py中的导入但未使用
+    __init__.py:F401,F403 
